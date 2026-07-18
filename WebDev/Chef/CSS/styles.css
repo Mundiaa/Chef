@@ -795,3 +795,225 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   outline: 2px solid var(--accent);
   outline-offset: 2px;
 }
+
+/* ==========================================================================
+   The Chef's Deck — card-game photo gallery (Portfolio section)
+   States: deck (stacked) → deal → table (4 category cards) → story (opened).
+   Powered by GSAP + Flip (JS/deck-gallery.js). Colors/type use site tokens.
+   ========================================================================== */
+.deck-gallery {
+  --deck-card-w: min(43vw, 250px);
+  --deck-card-r: var(--radius);
+  position: relative;
+  overflow: hidden;
+  min-height: 78vh;
+  margin-top: 36px;
+  border-radius: calc(var(--radius) + 8px);
+  background:
+    radial-gradient(120% 90% at 50% 0%,
+      color-mix(in srgb, var(--bg) 55%, var(--bg-alt)) 0%,
+      var(--bg-alt) 60%,
+      color-mix(in srgb, var(--bg-alt) 82%, var(--ink)) 100%);
+  box-shadow: inset 0 0 60px color-mix(in srgb, var(--ink) 10%, transparent);
+  perspective: 1400px;
+}
+@media (min-width: 1024px) {
+  .deck-gallery { --deck-card-w: 250px; min-height: 70vh; }
+}
+
+.deck-anchor { position: absolute; top: 50%; left: 50%; width: 1px; height: 1px; }
+
+.table-slots {
+  position: absolute; inset: 0;
+  display: grid; place-content: center;
+  grid-template-columns: repeat(2, var(--deck-card-w));
+  gap: clamp(16px, 3vw, 26px);
+  visibility: hidden; pointer-events: none;
+}
+.table-slots .slot { width: var(--deck-card-w); aspect-ratio: 5/7; }
+@media (min-width: 1024px) {
+  .table-slots { grid-template-columns: repeat(4, var(--deck-card-w)); }
+  .table-slots .slot:nth-child(1),
+  .table-slots .slot:nth-child(4) { transform: translateY(16px); } /* shallow arc */
+}
+
+.deal-hint {
+  position: absolute; left: 50%;
+  top: calc(50% + (var(--deck-card-w) * 0.91) + 16px);
+  transform: translateX(-50%);
+  margin: 0;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.03em;
+  pointer-events: none; white-space: nowrap;
+}
+@media (min-width: 640px) {
+  .deal-hint { top: calc(50% + (var(--deck-card-w) * 0.7) + 18px); }
+}
+
+/* ---------- cards ---------- */
+.deck-card {
+  position: absolute; top: 50%; left: 50%;
+  width: var(--deck-card-w); aspect-ratio: 5/7;
+  will-change: transform;
+}
+.deck-card .card-flipper {
+  position: relative; width: 100%; height: 100%;
+  transform-style: preserve-3d;
+}
+.deck-card .face {
+  position: absolute; inset: 0;
+  border-radius: var(--deck-card-r);
+  overflow: hidden;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.face--front {
+  display: block; width: 100%; height: 100%;
+  padding: 0; border: 0; cursor: pointer;
+  background: var(--card-bg);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--ink) 18%, transparent),
+              0 10px 24px color-mix(in srgb, var(--ink) 16%, transparent);
+  outline-offset: 3px;
+  transition: box-shadow var(--transition);
+}
+.face--front .cover {
+  position: absolute; inset: 5px;
+  border-radius: calc(var(--deck-card-r) - 4px);
+  overflow: hidden;
+  background: var(--bg-alt);
+}
+.face--front .cover img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.corner-mark {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+  display: grid; place-items: center;
+  font-size: 15px; color: var(--accent);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--ink) 25%, transparent);
+}
+.deck-card .band {
+  position: absolute; left: 5px; right: 5px; bottom: 5px; z-index: 1;
+  padding: 34px 14px 12px; text-align: left; color: #fff; opacity: 0;
+  border-radius: 0 0 calc(var(--deck-card-r) - 4px) calc(var(--deck-card-r) - 4px);
+  background: linear-gradient(to top, rgba(20, 17, 12, 0.82) 0%, rgba(20, 17, 12, 0.45) 60%, transparent 100%);
+}
+.deck-card .band .t {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.15rem; font-weight: 600; letter-spacing: 0.02em;
+}
+.deck-card .band .c { display: block; font-size: 0.72rem; opacity: 0.85; margin-top: 2px; }
+
+/* ---------- story (opened card) ---------- */
+.deck-card.story-open {
+  top: clamp(10px, 2vw, 18px); left: clamp(10px, 2vw, 18px);
+  width: calc(100% - clamp(20px, 4vw, 36px));
+  height: calc(100% - clamp(20px, 4vw, 36px));
+  aspect-ratio: auto; z-index: 60;
+}
+.face--back {
+  transform: rotateY(180deg);
+  background: var(--card-bg);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--ink) 18%, transparent),
+              0 14px 34px color-mix(in srgb, var(--ink) 20%, transparent);
+  display: flex; flex-direction: column;
+}
+.story-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px 24px; gap: 12px;
+}
+.story-head h3 { margin: 0; font-size: clamp(1.1rem, 2.4vw, 1.4rem); }
+.story-head .cnt { font-size: 0.75rem; color: var(--ink-soft); display: block; margin-top: 2px; }
+.story-close {
+  flex: 0 0 auto; width: 46px; height: 62px;
+  border: 0; cursor: pointer; position: relative;
+  border-radius: 8px;
+  color: color-mix(in srgb, var(--gold) 70%, #fff);
+  background:
+    radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--gold) 25%, transparent) 0 34%, transparent 35%),
+    repeating-linear-gradient(45deg, var(--accent) 0 6px, color-mix(in srgb, var(--accent) 80%, var(--ink)) 6px 12px);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--ink) 30%, transparent),
+              inset 0 0 0 2px color-mix(in srgb, var(--gold) 55%, transparent);
+  display: grid; place-items: center;
+  font-family: var(--font-accent);
+  font-weight: 400; font-size: 0.9rem; letter-spacing: 0.05em;
+}
+.story-close small {
+  position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
+  color: var(--ink-soft); font-size: 0.62rem; white-space: nowrap; letter-spacing: 0.03em;
+}
+.story-strip {
+  flex: 1; min-height: 0;
+  display: flex; gap: 12px; align-items: stretch;
+  overflow-x: auto; overflow-y: hidden;
+  padding: 8px 16px 12px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+.story-strip > * { flex: 0 0 auto; height: 100%; scroll-snap-align: start; }
+.story-strip img {
+  height: 100%; width: auto;
+  border-radius: 10px; display: block;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--ink) 15%, transparent);
+}
+.story-vid {
+  position: relative; height: 100%; aspect-ratio: 16/9;
+  border-radius: 10px; overflow: hidden;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--ink) 15%, transparent);
+  background: var(--ink);
+}
+.story-vid video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.story-vid .play {
+  position: absolute; inset: 0; margin: auto;
+  width: 58px; height: 58px;
+  border: 0; cursor: pointer; border-radius: 50%;
+  background: color-mix(in srgb, var(--ink) 60%, transparent);
+  color: #fff; font-size: 1.2rem;
+  display: grid; place-items: center;
+  backdrop-filter: blur(2px);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+.story-vid .mute {
+  position: absolute; right: 8px; bottom: 8px;
+  border: 0; cursor: pointer; font-size: 0.8rem;
+  border-radius: 6px; padding: 4px 8px;
+  background: color-mix(in srgb, var(--ink) 60%, transparent);
+  color: #fff;
+}
+.story-note {
+  margin: 0; padding: 12px 18px 18px;
+  border-top: 1px dashed var(--line);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: clamp(0.95rem, 1.9vw, 1.1rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.story-note::before { content: "— "; color: var(--accent); }
+
+/* ---------- shuffle button ---------- */
+.shuffle-btn {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px;
+  border: 0; cursor: pointer;
+  background: color-mix(in srgb, var(--card-bg) 88%, transparent);
+  color: var(--ink);
+  padding: 8px 14px 8px 8px; border-radius: 999px;
+  font-family: var(--font-body);
+  font-size: 0.88rem; font-weight: 600;
+  box-shadow: 0 2px 10px color-mix(in srgb, var(--ink) 18%, transparent);
+}
+.shuffle-btn .mini {
+  width: 26px; height: 36px; border-radius: 5px;
+  background: repeating-linear-gradient(45deg, var(--accent) 0 4px, color-mix(in srgb, var(--accent) 80%, var(--ink)) 4px 8px);
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--gold) 55%, transparent);
+}
+.shuffle-btn[hidden] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .deck-card { will-change: auto; }
+}

@@ -12,7 +12,7 @@
 <link rel="icon" type="image/png" href="Assets/Logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Italiana&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="CSS/styles.css">
 </head>
 <body>
 
@@ -170,45 +170,18 @@
     <div class="wrap">
       <p class="eyebrow">Portfolio</p>
       <h2>Plates, ingredients, stories.</h2>
-      <p class="section-lede">A living archive of food photography and signature dishes.</p>
+      <p class="section-lede">A living archive of food photography and signature dishes — held like a hand of cards. Tap the deck to deal it, open a pile, and shuffle back when you're done.</p>
 
-      <div class="filter-bar" role="group" aria-label="Filter portfolio by style">
-        <button class="filter-btn is-active" data-filter="all" type="button">All</button>
-        <button class="filter-btn" data-filter="plated" type="button">Plated</button>
-        <button class="filter-btn" data-filter="ingredients" type="button">Ingredients</button>
-        <button class="filter-btn" data-filter="behind-scenes" type="button">Behind the scenes</button>
-        <button class="filter-btn" data-filter="editorial" type="button">Editorial</button>
-      </div>
-
-      <div class="gallery" id="gallery">
-        <figure class="gallery-item has-photo" data-category="plated" data-label="Braised short rib">
-          <img src="Assets/03.jpeg" alt="Braised short rib">
-        </figure>
-        <figure class="gallery-item has-photo" data-category="ingredients" data-label="Contemporary Pâtisserie & Dessert Display">
-          <img src="Assets/08.jpeg" alt="Contemporary Pâtisserie & Dessert Display">
-        </figure>
-        <figure class="gallery-item placeholder-img" data-category="behind-scenes" data-label="Pass at 8pm"></figure>
-        <figure class="gallery-item placeholder-img" data-category="editorial" data-label="Cover story"></figure>
-        <figure class="gallery-item has-photo" data-category="plated" data-label="mise en place">
-          <img src="Assets/19.jpg" alt="mise en place">
-        </figure>
-        <figure class="gallery-item has-photo" data-category="ingredients" data-label="fine dining salad">
-          <img src="Assets/25.png" alt="fine dining salad">
-        </figure>
-        <figure class="gallery-item has-photo" data-category="plated" data-label="Marinated Tiger Prawns & Hand-Rolled Sushi">
-          <img src="Assets/13.jpeg" alt="Marinated Tiger Prawns & Hand-Rolled Sushi">
-        </figure>
-        <figure class="gallery-item placeholder-img" data-category="behind-scenes" data-label="Prep station"></figure>
-        <figure class="gallery-item placeholder-img" data-category="editorial" data-label="Gluten free cake"></figure>
-        <figure class="gallery-item has-photo" data-category="ingredients" data-label="Gourmet Cold Salad & Marinated Mussel Buffet">
-          <img src="Assets/15.jpeg" alt="Gourmet Cold Salad & Marinated Mussel Buffet">
-        </figure>
-        <figure class="gallery-item has-photo" data-category="plated" data-label="Assorted Maki & Nigiri Sushi Platter">
-          <img src="Assets/07.jpeg" alt="Assorted Maki & Nigiri Sushi Platter">
-        </figure>
-        <figure class="gallery-item has-photo" data-category="behind-scenes" data-label="Service moment">
-          <img src="Assets/In the kitchen.jpeg" alt="Service moment">
-        </figure>
+      <div class="deck-gallery" id="deckGallery" aria-label="Photo gallery — a deck of cards. Activate to deal the cards into categories.">
+        <div class="deck-anchor" aria-hidden="true"></div>
+        <div class="table-slots" aria-hidden="true"></div>
+        <p class="deal-hint" id="dealHint">Tap the deck to deal the cards</p>
+        <button class="shuffle-btn" id="shuffleBtn" hidden>
+          <span class="mini" aria-hidden="true"></span> Shuffle back
+        </button>
+        <noscript>
+          <p style="padding:24px">Enable JavaScript to browse the interactive gallery.</p>
+        </noscript>
       </div>
 
       <h3 class="dish-list-heading">Dishes with a point of view.</h3>
@@ -406,6 +379,9 @@
   </div>
 </footer>
 
-<script src="js/main.js"></script>
+<script src="JS/gsap.min.js"></script>
+<script src="JS/Flip.min.js"></script>
+<script src="JS/deck-gallery.js"></script>
+<script src="JS/main.js"></script>
 </body>
 </html>
