@@ -47,11 +47,14 @@
   var galleryItems = document.querySelectorAll(".gallery-item");
   filterBtns.forEach(function (btn) {
     btn.addEventListener("click", function () {
-      filterBtns.forEach(function (b) { b.classList.remove("is-active"); });
+      filterBtns.forEach(function (b) {
+        b.classList.remove("is-active");
+      });
       btn.classList.add("is-active");
       var filter = btn.getAttribute("data-filter");
       galleryItems.forEach(function (item) {
-        var match = filter === "all" || item.getAttribute("data-category") === filter;
+        var match =
+          filter === "all" || item.getAttribute("data-category") === filter;
         item.classList.toggle("is-hidden", !match);
       });
     });
@@ -88,13 +91,23 @@
       if (!dragging) return;
       positionFromClientX(e.clientX);
     });
-    handle.addEventListener("pointerup", function () { dragging = false; });
-    handle.addEventListener("pointercancel", function () { dragging = false; });
+    handle.addEventListener("pointerup", function () {
+      dragging = false;
+    });
+    handle.addEventListener("pointercancel", function () {
+      dragging = false;
+    });
 
     handle.addEventListener("keydown", function (e) {
       var current = parseFloat(handle.getAttribute("aria-valuenow")) || 50;
-      if (e.key === "ArrowLeft") { setComparePosition(current - 5); e.preventDefault(); }
-      if (e.key === "ArrowRight") { setComparePosition(current + 5); e.preventDefault(); }
+      if (e.key === "ArrowLeft") {
+        setComparePosition(current - 5);
+        e.preventDefault();
+      }
+      if (e.key === "ArrowRight") {
+        setComparePosition(current + 5);
+        e.preventDefault();
+      }
     });
 
     setComparePosition(50);
@@ -110,12 +123,42 @@
   // Quantities below are calibrated for BASE_SERVINGS (4).
   // "scales: false" ingredients (salt, pepper, oil-to-taste) stay fixed.
   var RECIPE = [
-    { name: "Sea scallops", metric: { qty: 12, unit: "pcs" }, imperial: { qty: 12, unit: "pcs" }, scales: true },
-    { name: "Unsalted butter", metric: { qty: 60, unit: "g" }, imperial: { qty: 4, unit: "tbsp" }, scales: true },
-    { name: "Garlic cloves", metric: { qty: 2, unit: "cloves" }, imperial: { qty: 2, unit: "cloves" }, scales: true },
-    { name: "Fresh thyme", metric: { qty: 3, unit: "sprigs" }, imperial: { qty: 3, unit: "sprigs" }, scales: true },
-    { name: "Lemon, juiced", metric: { qty: 1, unit: "whole" }, imperial: { qty: 1, unit: "whole" }, scales: true },
-    { name: "Sea salt & black pepper", metric: { qty: null, unit: "to taste" }, imperial: { qty: null, unit: "to taste" }, scales: false }
+    {
+      name: "Sea scallops",
+      metric: { qty: 12, unit: "pcs" },
+      imperial: { qty: 12, unit: "pcs" },
+      scales: true,
+    },
+    {
+      name: "Unsalted butter",
+      metric: { qty: 60, unit: "g" },
+      imperial: { qty: 4, unit: "tbsp" },
+      scales: true,
+    },
+    {
+      name: "Garlic cloves",
+      metric: { qty: 2, unit: "cloves" },
+      imperial: { qty: 2, unit: "cloves" },
+      scales: true,
+    },
+    {
+      name: "Fresh thyme",
+      metric: { qty: 3, unit: "sprigs" },
+      imperial: { qty: 3, unit: "sprigs" },
+      scales: true,
+    },
+    {
+      name: "Lemon, juiced",
+      metric: { qty: 1, unit: "whole" },
+      imperial: { qty: 1, unit: "whole" },
+      scales: true,
+    },
+    {
+      name: "Sea salt & black pepper",
+      metric: { qty: null, unit: "to taste" },
+      imperial: { qty: null, unit: "to taste" },
+      scales: false,
+    },
   ];
 
   var COOK_STEPS = [
@@ -123,7 +166,7 @@
     "Heat a heavy skillet over high heat until just smoking. Add a thin layer of neutral oil.",
     "Sear scallops 1.5–2 minutes per side, undisturbed, until golden. Remove and rest.",
     "Lower heat to medium. Add butter, garlic, and thyme; baste until butter turns nutty brown.",
-    "Return scallops to the pan briefly to coat in the brown butter, finish with lemon juice, and plate."
+    "Return scallops to the pan briefly to coat in the brown butter, finish with lemon juice, and plate.",
   ];
 
   var servings = BASE_SERVINGS;
@@ -139,7 +182,9 @@
   function formatQty(num) {
     // Round to a friendly fraction-ish precision without a fractions lib.
     var rounded = Math.round(num * 100) / 100;
-    return rounded % 1 === 0 ? String(rounded) : rounded.toFixed(2).replace(/0$/, "");
+    return rounded % 1 === 0
+      ? String(rounded)
+      : rounded.toFixed(2).replace(/0$/, "");
   }
 
   function renderIngredients() {
@@ -181,7 +226,9 @@
   }
   unitButtons.forEach(function (btn) {
     btn.addEventListener("click", function () {
-      unitButtons.forEach(function (b) { b.classList.remove("is-active"); });
+      unitButtons.forEach(function (b) {
+        b.classList.remove("is-active");
+      });
       btn.classList.add("is-active");
       currentUnit = btn.getAttribute("data-unit");
       renderIngredients();
@@ -206,10 +253,12 @@
 
   function renderCookStep() {
     cookModeStep.textContent = COOK_STEPS[stepIndex];
-    cookModeProgress.textContent = "Step " + (stepIndex + 1) + " of " + COOK_STEPS.length;
-    cookModeBar.style.width = ((stepIndex + 1) / COOK_STEPS.length * 100) + "%";
+    cookModeProgress.textContent =
+      "Step " + (stepIndex + 1) + " of " + COOK_STEPS.length;
+    cookModeBar.style.width = ((stepIndex + 1) / COOK_STEPS.length) * 100 + "%";
     cookModePrev.disabled = stepIndex === 0;
-    cookModeNext.textContent = stepIndex === COOK_STEPS.length - 1 ? "Done" : "Next step";
+    cookModeNext.textContent =
+      stepIndex === COOK_STEPS.length - 1 ? "Done" : "Next step";
   }
 
   function openCookMode() {
@@ -253,9 +302,7 @@
   }
 
   /* ---------------------------------------------------------------------
-     Contact form — front-end only validation + status message.
-     Wire this up to an email service (Formspree, Resend, etc.) or your
-     own backend before going live; right now nothing is actually sent.
+     Contact form — Final Boss Version
      --------------------------------------------------------------------- */
   var contactForm = document.getElementById("contactForm");
   var formStatus = document.getElementById("formStatus");
@@ -263,20 +310,40 @@
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      var name = document.getElementById("name").value.trim();
-      var email = document.getElementById("email").value.trim();
-      var message = document.getElementById("message").value.trim();
-      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-      if (!name || !email || !message || !emailPattern.test(email)) {
-        formStatus.textContent = "Please fill in your name, a valid email, and a message.";
-        formStatus.className = "form-status is-error";
+      var data = new FormData(contactForm);
+
+      // Safety check: make sure we actually have data
+      if (!data.get("email") || !data.get("message")) {
+        formStatus.textContent = "Please fill in the required fields.";
+        formStatus.style.color = "var(--accent)";
         return;
       }
 
-      formStatus.textContent = "This is a prototype form — no message was actually sent. Connect a form service to go live.";
-      formStatus.className = "form-status is-success";
-      contactForm.reset();
+      formStatus.textContent = "Sending...";
+      formStatus.style.color = "var(--ink-soft)";
+
+      fetch(contactForm.action, {
+        method: "POST",
+        body: data,
+        headers: {
+          Accept: "application/json",
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            formStatus.textContent = "Success! Chef Melvin has your message.";
+            formStatus.style.color = "var(--olive)";
+            contactForm.reset();
+          } else {
+            formStatus.textContent = "Oops! There was a problem. Try again.";
+            formStatus.style.color = "var(--accent)";
+          }
+        })
+        .catch((error) => {
+          formStatus.textContent = "Connection error. Please try again.";
+          formStatus.style.color = "var(--accent)";
+        });
     });
   }
 })();
