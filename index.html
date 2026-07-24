@@ -285,21 +285,38 @@
         <div class="wrap">
           <p class="eyebrow">Behind the pass</p>
           <h2>In the kitchen, always.</h2>
-          <p class="section-lede">
-            A quiet, obsessive practice — mise en place, tasting, adjusting. The
-            camera catches what the plate can't say. Drag the slider to see prep
-            become plating.
-          </p>
+          <div class="slider-header">
+            <p class="section-lede">
+              A quiet, obsessive practice — mise en place, tasting, adjusting.
+              Drag the slider to see prep become plating.
+            </p>
+            <span class="drag-hint">↔ Drag to reveal</span>
+          </div>
 
           <div class="compare" id="compare">
+            <!-- These are your new indicators -->
+            <div class="compare-overlay-label label-prep">Mise En Place</div>
+            <div class="compare-overlay-label label-plating">
+              Finished Plate
+            </div>
+
             <div
               class="compare-after"
-              style="background-image: url('Assets/Plating.jpeg'); background-size: cover; background-position: center;"
+              style="
+                background-image: url(&quot;Assets/Plating.jpeg&quot;);
+                background-size: cover;
+                background-position: center;
+              "
               data-label="Plating — finished plate"
             ></div>
+
             <div
               class="compare-before"
-              style="background-image: url('Assets/Prep.jpeg'); background-size: cover; background-position: center;"
+              style="
+                background-image: url(&quot;Assets/Prep.jpeg&quot;);
+                background-size: cover;
+                background-position: center;
+              "
               data-label="Prep — mise en place"
             >
               <div
@@ -312,7 +329,9 @@
                 aria-valuemax="100"
                 aria-valuenow="50"
               >
-                <span class="compare-handle-grip">↔</span>
+                <!-- Vertical label inside the handle -->
+                <span class="handle-label">SLIDER</span>
+                <span class="compare-handle-grip">&harr;</span>
               </div>
             </div>
           </div>

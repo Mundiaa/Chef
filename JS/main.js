@@ -347,3 +347,10 @@
     });
   }
 })();
+
+function setComparePosition(percent) {
+  percent = Math.max(0, Math.min(100, percent));
+  compareBefore.style.clipPath = "inset(0 " + (100 - percent) + "% 0 0)";
+  handle.style.left = percent + "%";
+  handle.setAttribute("aria-valuenow", Math.round(percent));
+}
