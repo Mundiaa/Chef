@@ -718,6 +718,15 @@ img {
 }
 .recipe-media {
   border-radius: 0;
+  background: var(--ink);
+  min-height: 100%;
+}
+.recipe-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
 }
 .recipe-body {
   padding: 32px;
@@ -818,6 +827,9 @@ img {
   }
   .recipe-media {
     aspect-ratio: 16/9;
+  }
+  .recipe-video {
+    min-height: 0;
   }
 }
 
@@ -1174,6 +1186,7 @@ textarea:focus-visible {
   --deck-card-w: min(43vw, 250px);
   --deck-card-r: var(--radius);
   position: relative;
+  isolation: isolate;
   overflow: hidden;
   min-height: 78vh;
   margin-top: 36px;
@@ -1187,6 +1200,36 @@ textarea:focus-visible {
   box-shadow: inset 0 0 60px color-mix(in srgb, var(--ink) 10%, transparent);
   perspective: 1400px;
 }
+.deck-gallery::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      70% 55% at 50% 42%,
+      color-mix(in srgb, var(--bg) 8%, transparent) 0%,
+      color-mix(in srgb, var(--ink) 34%, transparent) 70%,
+      color-mix(in srgb, var(--ink) 52%, transparent) 100%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--bg) 22%, transparent) 0%,
+      color-mix(in srgb, var(--ink) 32%, transparent) 100%
+    );
+}
+.deck-gallery-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.58) contrast(0.64);
+  transform: scale(1.04);
+  opacity: 0.80;
+}
 @media (min-width: 1024px) {
   .deck-gallery {
     --deck-card-w: 250px;
@@ -1196,6 +1239,7 @@ textarea:focus-visible {
 
 .deck-anchor {
   position: absolute;
+  z-index: 2;
   top: 50%;
   left: 50%;
   width: 1px;
@@ -1204,6 +1248,7 @@ textarea:focus-visible {
 
 .table-slots {
   position: absolute;
+  z-index: 2;
   inset: 0;
   display: grid;
   place-content: center;
@@ -1228,6 +1273,7 @@ textarea:focus-visible {
 
 .deal-hint {
   position: absolute;
+  z-index: 5;
   left: 50%;
   top: calc(50% + (var(--deck-card-w) * 0.91) + 16px);
   transform: translateX(-50%);
@@ -1249,6 +1295,7 @@ textarea:focus-visible {
 /* ---------- cards ---------- */
 .deck-card {
   position: absolute;
+  z-index: 3;
   top: 50%;
   left: 50%;
   width: var(--deck-card-w);
@@ -1507,6 +1554,7 @@ textarea:focus-visible {
 /* ---------- shuffle button ---------- */
 .shuffle-btn {
   position: absolute;
+  z-index: 70;
   left: 50%;
   bottom: 14px;
   transform: translateX(-50%);

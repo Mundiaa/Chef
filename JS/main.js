@@ -121,52 +121,64 @@
   var MAX_SERVINGS = 12;
 
   // Quantities below are calibrated for BASE_SERVINGS (4).
-  // "scales: false" ingredients (salt, pepper, oil-to-taste) stay fixed.
+  // "scales: false" ingredients (salt, pepper, garnish) stay fixed.
   var RECIPE = [
     {
-      name: "Sea scallops",
-      metric: { qty: 12, unit: "pcs" },
-      imperial: { qty: 12, unit: "pcs" },
+      name: "Cooked long-grain rice",
+      metric: { qty: 600, unit: "g" },
+      imperial: { qty: 4, unit: "cups" },
       scales: true,
     },
     {
-      name: "Unsalted butter",
-      metric: { qty: 60, unit: "g" },
-      imperial: { qty: 4, unit: "tbsp" },
+      name: "Tomato paste",
+      metric: { qty: 45, unit: "g" },
+      imperial: { qty: 3, unit: "tbsp" },
       scales: true,
     },
     {
-      name: "Garlic cloves",
-      metric: { qty: 2, unit: "cloves" },
-      imperial: { qty: 2, unit: "cloves" },
+      name: "Diced tomatoes or red pepper",
+      metric: { qty: 160, unit: "g" },
+      imperial: { qty: 1, unit: "cup" },
       scales: true,
     },
     {
-      name: "Fresh thyme",
-      metric: { qty: 3, unit: "sprigs" },
-      imperial: { qty: 3, unit: "sprigs" },
+      name: "Green peas",
+      metric: { qty: 120, unit: "g" },
+      imperial: { qty: 1, unit: "cup" },
       scales: true,
     },
     {
-      name: "Lemon, juiced",
-      metric: { qty: 1, unit: "whole" },
-      imperial: { qty: 1, unit: "whole" },
+      name: "Diced sausage or sweet pepper",
+      metric: { qty: 180, unit: "g" },
+      imperial: { qty: 1.25, unit: "cups" },
       scales: true,
     },
     {
-      name: "Sea salt & black pepper",
-      metric: { qty: null, unit: "to taste" },
-      imperial: { qty: null, unit: "to taste" },
+      name: "Onion and garlic, minced",
+      metric: { qty: 1, unit: "batch" },
+      imperial: { qty: 1, unit: "batch" },
+      scales: true,
+    },
+    {
+      name: "Neutral oil",
+      metric: { qty: 30, unit: "ml" },
+      imperial: { qty: 2, unit: "tbsp" },
+      scales: true,
+    },
+    {
+      name: "Sesame-herb seasoning",
+      metric: { qty: null, unit: "to finish" },
+      imperial: { qty: null, unit: "to finish" },
       scales: false,
     },
   ];
 
   var COOK_STEPS = [
-    "Pat the scallops completely dry and season both sides with salt and pepper.",
-    "Heat a heavy skillet over high heat until just smoking. Add a thin layer of neutral oil.",
-    "Sear scallops 1.5–2 minutes per side, undisturbed, until golden. Remove and rest.",
-    "Lower heat to medium. Add butter, garlic, and thyme; baste until butter turns nutty brown.",
-    "Return scallops to the pan briefly to coat in the brown butter, finish with lemon juice, and plate.",
+    "Warm the oil in a wide pan, then sweat the onion and garlic until fragrant and glossy.",
+    "Toast the tomato paste for 1 minute, then fold in diced tomatoes or red pepper until the base turns deep red.",
+    "Add the sausage or sweet pepper and peas; stir until everything is hot and evenly coated.",
+    "Fold in the cooked rice, breaking up clumps so every grain catches the tomato base.",
+    "Finish with sesame-herb seasoning, taste for salt and pepper, then serve while the rice is still glossy.",
   ];
 
   var servings = BASE_SERVINGS;

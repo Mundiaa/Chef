@@ -88,8 +88,7 @@
           <p class="hero-sub">
             An aspiring chef with a fluent hand across cuisines — a
             photographer, recipe developer, content creator and culinary
-            consultant. Every plate begins as an idea, tested until it becomes a
-            story worth telling.
+            consultant.
           </p>
           <div class="hero-cta">
             <a class="btn btn-primary" href="#contact">Book Chef Melvin</a>
@@ -251,6 +250,17 @@
             id="deckGallery"
             aria-label="Photo gallery — a deck of cards. Activate to deal the cards into categories."
           >
+            <video
+              class="deck-gallery-bg"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="metadata"
+              aria-hidden="true"
+            >
+              <source src="Assets/vid2.0.mp4" type="video/mp4" />
+            </video>
             <div class="deck-anchor" aria-hidden="true"></div>
             <div class="table-slots" aria-hidden="true"></div>
             <p class="deal-hint" id="dealHint">
@@ -350,19 +360,26 @@
           </p>
 
           <article class="recipe-card" id="recipeCard">
-            <div
-              class="recipe-media placeholder-img"
-              data-label="Replace: finished dish photo"
-            ></div>
+            <div class="recipe-media">
+              <video
+                class="recipe-video"
+                src="Assets/vid1.mp4"
+                controls
+                muted
+                playsinline
+                preload="metadata"
+                aria-label="Tomato fried rice being finished in the pan"
+              ></video>
+            </div>
 
             <div class="recipe-body">
               <div class="recipe-head">
                 <h3>
-                  Brown-Butter Seared Scallops
+                  Tomato Fried Rice
                   <span class="recipe-tag">Example recipe</span>
                 </h3>
                 <p class="recipe-meta">
-                  Prep 15 min · Cook 10 min · Serves
+                  Prep 10 min · Cook 12 min · Serves
                   <span id="servingsOut">4</span>
                 </p>
               </div>
