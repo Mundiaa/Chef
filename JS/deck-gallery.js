@@ -68,7 +68,7 @@
       note: "The dining room gets the applause, but 5 a.m. at the market and the hiss of the first pan — that is where the real cooking happens.",
       media: [
         { type: "photo", src: "Assets/In the kitchen.jpeg", alt: "Chef Melvin at his station during service" },
-        { type: "photo", src: "Assets/In the kitchen 01.jpeg", alt: "Chef Melvin, portrait in the kitchen" },
+        { type: "photo", src: "Assets/In-the-kitchen-01.jpeg", alt: "Chef Melvin, portrait in the kitchen" },
         { type: "photo", src: "Assets/19.jpg", alt: "Mise en place — potatoes, peppers, zucchini and cabbage" },
         { type: "photo", src: "Assets/20.jpeg", alt: "Okra stew simmering in the pot" },
         { type: "photo", src: "Assets/21.jpeg", alt: "Slow-cooked chicken curry in the chafing dish" },
