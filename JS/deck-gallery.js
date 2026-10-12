@@ -35,7 +35,7 @@
       title: "Buffets & Events",
       mark: "❖",
       cover: { src: "Assets/14.jpeg", alt: "A dressed buffet line with seafood displays" },
-      note: "A long line, sixty guests, no second chances. The nights I remember are the ones where the food made strangers talk like old friends.",
+      note: "Private tables, careful timing, and food that turns the room warm. The best nights are the ones where every course feels personal.",
       media: [
         { type: "photo", src: "Assets/14.jpeg", alt: "A dressed buffet line with seafood displays" },
         { type: "photo", src: "Assets/11.jpeg", alt: "Salad boards and appetizer glasses on a carving table" },
@@ -148,13 +148,20 @@
   initDeck();
 
   /* ═══════════ idle breathing + hover fan ═══════════ */
-  function stopIdle() { idleTweens.forEach(function (t) { t.kill(); }); idleTweens = []; }
+  function stopIdle() { idleTweens.forEach(function (t) { t.kill(); }); idleTweens = []; }  //The function stops any ongoing idle animations by killing all the GSAP tweens stored in the idleTweens array and then clearing the array. This ensures that when the user interacts with the gallery, the idle animations stop immediately.
   function startIdle() {
     if (RM) return;
     stopIdle();
     idleTweens = cards.map(function (c, i) {
-      return gsap.to(c.el, { y: STACK_Y[i] + 2.5, rotation: STACK_ROT[i] + 1,
-        duration: 1.6 + i * 0.35, ease: "sine.inOut", yoyo: true, repeat: -1, delay: i * 0.2 });
+      return gsap.to(c.el, { 
+        y: STACK_Y[i] + 2.5, 
+        rotation: STACK_ROT[i] + 1,
+        duration: 1.6 + i * 0.35, 
+        ease: "sine.inOut", 
+        yoyo: true,   // yoyo: true makes the animation reverse back to the start, creating a smooth oscillation.
+        repeat: -1, // repeat: -1 makes the animation loop indefinitely, so the idle effect continues until interrupted.
+        delay: i * 0.2 });
+        //The duration and delay staggers the cards so they don't all move in unison, creating a more natural idle effect.
     });
   }
   startIdle();
@@ -164,13 +171,21 @@
       if (state !== "deck") return;
       stopIdle();
       cards.forEach(function (c, i) {
-        gsap.to(c.el, { rotation: STACK_ROT[i] * 1.8, x: STACK_X[i] * 3, duration: 0.35, ease: "power2.out" });
+        gsap.to(c.el, { 
+          rotation: STACK_ROT[i] * 1.8, // rotation is exaggerated to fan out the cards more dramatically
+          x: STACK_X[i] * 3, 
+          duration: 0.35, 
+          ease: "power2.out" });
       });
     });
     gallery.addEventListener("mouseleave", function () {
       if (state !== "deck") return;
       cards.forEach(function (c, i) {
-        gsap.to(c.el, { rotation: STACK_ROT[i], x: STACK_X[i], duration: 0.4, ease: "power2.inOut",
+        gsap.to(c.el, { 
+          rotation: STACK_ROT[i], 
+          x: STACK_X[i], 
+          duration: 0.4, 
+          ease: "power2.inOut",
           onComplete: i === N - 1 ? startIdle : null });
       });
     });
@@ -186,7 +201,7 @@
     if (state !== "deck") return;
     state = "dealing";
     stopIdle();
-    if (!hintDismissed && hint) {
+    if (!hintDismissed && hint) {   //The condition checks if the hint has not been dismissed and if the hint element exists. If both conditions are true, it sets hintDismissed to true and animates the hint's opacity to 0 over 0.3 seconds. Once the animation is complete, it removes the hint element from the DOM. This ensures that the hint is only shown once and is removed when the user interacts with the gallery.
       hintDismissed = true;
       gsap.to(hint, { opacity: 0, duration: 0.3, onComplete: function () { hint.remove(); } });
     }
@@ -198,10 +213,10 @@
         gsap.set(c.el, { x: slots[i].x, y: slots[i].y, rotation: TABLE_ROT[i], scale: 1 });
       });
       gsap.to(cards.map(function (c) { return c.band; }), { opacity: 1, duration: 0.2 });
-      finishDeal();
+      finishDeal(); //If the user has enabled reduced motion, the function sets the position, rotation, and scale of each card to their final values without any animation. It also fades in the bands of the cards. After setting these properties, it calls finishDeal() to transition to the table state.
       return;
     }
-    var tl = gsap.timeline({ onComplete: finishDeal });
+    var tl = gsap.timeline({ onComplete: finishDeal });   //The function creates a GSAP timeline to animate the dealing of the cards. The onComplete callback is set to finishDeal, which will be called once all animations in the timeline are complete.
     cards.forEach(function (c, k) { // deal from the top of the stack
       var i = c.i, t = k * 0.08;
       tl.to(c.el, { x: slots[i].x, duration: 0.55, ease: "power2.inOut" }, t)
